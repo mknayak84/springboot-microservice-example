@@ -20,26 +20,31 @@ spring:
         uri: lb://ORDER-SERVICE
         predicates:
           - Path=/order/**
-#        filters:
-#          - name: CircuitBreaker
-#            args:
-#              name: order-service
-#              fallbackuri: forward:/orderFallBack
+        filters:
+          - name: CircuitBreaker
+            args:
+              name: order-service
+              fallbackuri: forward:/orderFallBack
       - id: payment-service
         uri: lb://PAYMENT-SERVICE
         predicates:
           - Path=/payment/**
-#        filters:
-#          - name: CircuitBreaker
-#            args:
-#              name: payment-service
-#              fallbackuri: forward:/paymentFallBack
+        filters:
+          - name: CircuitBreaker
+            args:
+              name: payment-service
+              fallbackuri: forward:/paymentFallBack
               
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: hystrix.stream
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    hystrix:
+      stream:
+        enabled: true
+
 
 
                
