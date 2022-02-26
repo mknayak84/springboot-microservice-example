@@ -10,20 +10,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.microservices.pms.entiry.Payment;
 import com.example.microservices.pms.service.PaymentService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {
 	@Autowired
 	private PaymentService service;
-	
+
 	@PostMapping("/doPayment")
-	public Payment doPayment(@RequestBody Payment newPayment) {
+	public Payment doPayment(@RequestBody Payment newPayment) throws JsonProcessingException {
 		return service.doPayment(newPayment);
 	}
-	
+
 	@GetMapping("/{orderId}")
-	public Payment getPaymentHistoryByOrderId(@PathVariable int orderId) {
+	public Payment getPaymentHistoryByOrderId(@PathVariable int orderId) throws JsonProcessingException {
 		return service.getPaymentHistoryByOrderId(orderId);
 	}
 }
