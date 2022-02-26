@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.microservices.oms.exception.OrderException;
 import com.example.microservices.oms.model.TransactionRequest;
 import com.example.microservices.oms.model.TransactionResponse;
 import com.example.microservices.oms.service.OrderService;
@@ -19,7 +20,9 @@ public class OrderController {
 
 	@PostMapping("/bookOrder")
 	public TransactionResponse bookOrder(@RequestBody TransactionRequest request) throws JsonProcessingException {
-
+		if (request.getOrder().getName() == null || request.getOrder().getName().isEmpty()) {
+			throw new OrderException("Order name input is missing!");
+		}
 		return orderService.saveOrder(request);
 	}
 }
